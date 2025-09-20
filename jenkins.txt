@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         NODE_ENV = 'production'
-        MONGO_URI = credentials('mongo-uri') // optional: used in your app, not Jenkins
+        MONGO_URI = credentials('mongo-uri')
     }
 
     stages {
@@ -23,14 +23,14 @@ pipeline {
     post {
         success {
             slackSend (
-                channel: '#YourFirstName_IP1',
-                message: "✅ Build #${env.BUILD_ID} passed. Site is live at: https://your-render-url.onrender.com"
+                channel: '#Joan_IP1',
+                message: "✅ Build #${env.BUILD_ID} passed. Site is live at: https://darkroom-app-2khw.onrender.com"
             )
         }
 
         failure {
             slackSend (
-                channel: '#YourFirstName_IP1',
+                channel: '#Joan_IP1',
                 message: "❌ Build #${env.BUILD_ID} failed."
             )
             mail to: 'your@email.com',
