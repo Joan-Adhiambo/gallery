@@ -4,6 +4,8 @@ pipeline {
     environment {
         NODE_ENV = 'production'
         MONGO_URI = credentials('mongo-uri')
+        SLACK_WEBHOOK = credentials('slack-webhook')
+        RENDER_URL = 'https://darkroom-app-2khw.onrender.com'
     }
 
     stages {
@@ -12,30 +14,31 @@ pipeline {
                 sh 'npm install'
             }
         }
-
         stage('Test') {
             steps {
                 sh 'npm test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // Render deploy command or script if needed
+                echo 'Deploy step placeholder'
             }
         }
     }
 
     post {
         success {
-            slackSend (
+            slackSend(
                 channel: '#Joan_IP1',
-                message: "✅ Build #${env.BUILD_ID} passed. Site is live at: https://darkroom-app-2khw.onrender.com"
+                message: "✅ Build #${env.BUILD_ID} passed. Site is live at: ${env.RENDER_URL}"
             )
         }
-
         failure {
-            slackSend (
+            slackSend(
                 channel: '#Joan_IP1',
                 message: "❌ Build #${env.BUILD_ID} failed."
             )
-            mail to: 'adhiambojoan83@gmail.com',
-                 subject: "❌ Jenkins Build #${env.BUILD_ID} Failed",
-                 body: "The Jenkins pipeline failed. Check Jenkins logs for more details."
         }
     }
 }
