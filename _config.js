@@ -7,8 +7,11 @@ config.mongoURI = {
    test:'mongodb+srv://adhiambojoan83_db_user:7VeIcygADe2yevN5@cluster1.lul9c2s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1',
 
 //module.exports = {
-   // mongoURI:'mongodb+srv://adhiambojoan83_db_user:7VeIcygADe2yevN5@cluster1.lul9c2s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1'
+    //mongoURI:'mongodb+srv://adhiambojoan83_db_user:7VeIcygADe2yevN5@cluster1.lul9c2s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1'
+    
 }
+module.exports = config;
+
 
 
 
