@@ -30,13 +30,13 @@ pipeline {
     post {
         success {
             slackSend(
-                channel: '#Joan_IP1',
+                channel: '#joan_ip1',
                 message: "✅ Build #${env.BUILD_ID} passed. Site is live at: ${env.RENDER_URL}"
             )
         }
         failure {
             slackSend(
-                channel: '#Joan_IP1',
+                channel: '#joan_ip1',
                 message: "❌ Build #${env.BUILD_ID} failed."
             )
         }
