@@ -33,7 +33,7 @@ pipeline {
                 channel: '#Joan_IP1',
                 message: "❌ Build #${env.BUILD_ID} failed."
             )
-            mail to: 'your@email.com',
+            mail to: 'adhiambojoan83@gmail.com',
                  subject: "❌ Jenkins Build #${env.BUILD_ID} Failed",
                  body: "The Jenkins pipeline failed. Check Jenkins logs for more details."
         }
