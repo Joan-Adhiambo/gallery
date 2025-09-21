@@ -47,6 +47,7 @@ app.use('/image', image);
 
 
  
+<<<<<<< HEAD
 const PORT = process.env.PORT || 5000;
 app.listen(PORT,() =>{
     console.log(`Server is listening at http://localhost:${PORT}`)
@@ -54,3 +55,10 @@ app.listen(PORT,() =>{
 
 
 module.exports = app;
+=======
+const PORT = process.env.PORT || 10000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+>>>>>>> 41cdeac67ea0f2fe56ab9cb75e2585802b46f487

@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    environment {
+        NODE_ENV = 'production'
+        MONGO_URI = credentials('mongo-uri')
+    }
+
+    stages {
+        stage('Install') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+    }
+
+    post {
+        success {
+            slackSend (
+                channel: '#Joan_IP1',
+                message: "✅ Build #${env.BUILD_ID} passed. Site is live at: https://darkroom-app-2khw.onrender.com"
+            )
+        }
+
+        failure {
+            slackSend (
+                channel: '#Joan_IP1',
+                message: "❌ Build #${env.BUILD_ID} failed."
+            )
+            mail to: 'your@email.com',
+                 subject: "❌ Jenkins Build #${env.BUILD_ID} Failed",
+                 body: "The Jenkins pipeline failed. Check Jenkins logs for more details."
+        }
+    }
+}
