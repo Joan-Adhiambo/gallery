@@ -43,14 +43,14 @@ pipeline {
       post {
     success {
         slackSend(
-            channel: '#YourFirstName_IP1joan_ip1',
+            channel: '#joan_ip1',
             webhookUrl: "${env.SLACK_WEBHOOK}",
             message: "✅ Build #${env.BUILD_NUMBER} passed. Site live at ${env.RENDER_URL}"
         )
     }
     failure {
         slackSend(
-            channel: '#YourFirstName_IP1joan_ip1',
+            channel: '#joan_ip1',
             webhookUrl: "${env.SLACK_WEBHOOK}",
             message: "❌ Build #${env.BUILD_NUMBER} failed. Logs: ${env.BUILD_URL}"
         )
