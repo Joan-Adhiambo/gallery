@@ -14,20 +14,33 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Test') {
+        stage('Run Test') {
+            when {
+                branch 'master'
+            }
             steps {
                 sh 'npm test'
             }
         }
-        stage('Deploy') {
+        stage('Deploy to Render') {
             steps {
-                // Render deploy command or script if needed
-                echo 'Deploy step placeholder'
+                echo 'Deploy application to Render'
+                echo "App should now be accessible at ${env.RENDER_URL}"
             }
         }
     }
-
-    post {
+    stage('Run Tests') {
+            when {
+                branch 'master'
+            }
+            steps {
+                echo 'Running tests'
+                sh 'npm test'
+            }
+        }
+    }
+  
+      post {
         success {
             slackSend(
                 channel: '#joan_ip1',
@@ -35,10 +48,13 @@ pipeline {
             )
         }
         failure {
+            echo "Build #${env.BUILD_NUMBER} failed."
+
+
             slackSend(
                 channel: '#joan_ip1',
-                message: "❌ Build #${env.BUILD_ID} failed."
+                message: "Build #${env.BUILD_NUMBER} failed. Logs: ${env.BUILD_URL}"
             )
         }
     }
-}
+
