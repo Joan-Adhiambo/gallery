@@ -26,9 +26,13 @@ pipeline {
             }
         }
         stage('Deploy to Render') {
-            steps {
-                echo 'Deploy application to Render'
-                echo "App should now be accessible at ${env.RENDER_URL}"
+            steps {steps {
+                withCredentials([string(credentialsId: 'renderwebhook', variable: 'DEPLOY_HOOK')]) {
+                    sh 'curl -X POST $DEPLOY_HOOK'
+                }
+            }
+
+                
             }
         }
       
