@@ -50,7 +50,7 @@ pipeline {
         slackSend(
             channel: '#joan_ip1',
             tokenCredentialId: 'slackwebhook',
-            message: '✅ Build #${env.BUILD_NUMBER} passed. Site live at ${env.RENDER_URL}')
+            message: "✅ Build #${env.BUILD_NUMBER} passed. Site live at ${env.RENDER_URL}")
     }
     failure {
         slackSend(
