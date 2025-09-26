@@ -1,10 +1,15 @@
 pipeline {
     agent any
+        tools {
+      nodejs 'nodejs18'
+    }
+   triggers{
+       githubPush()
+   }
 
     environment {
         NODE_ENV = 'production'
-        MONGO_URI = credentials('mongo-uri')
-        SLACK_WEBHOOK = credentials('slack-webhook')
+        SLACK_WEBHOOK = credentials('slackwebhook')
         RENDER_URL = 'https://darkroom-app-2khw.onrender.com'
     }
 
@@ -15,9 +20,7 @@ pipeline {
             }
         }
         stage('Run Test') {
-            when {
-                branch 'master'
-            }
+            
             steps {
                 sh 'npm test'
             }
@@ -28,32 +31,30 @@ pipeline {
                 echo "App should now be accessible at ${env.RENDER_URL}"
             }
         }
-    }
+      
     stage('Run Tests') {
-            when {
-                branch 'master'
-            }
+            
             steps {
                 echo 'Running tests'
                 sh 'npm test'
             }
-        }
     }
+}
   
       post {
     success {
         slackSend(
             channel: '#joan_ip1',
-            webhookUrl: "${env.SLACK_WEBHOOK}",
-            message: "✅ Build #${env.BUILD_NUMBER} passed. Site live at ${env.RENDER_URL}"
-        )
+            tokenCredentialId: 'slackwebhook',
+            message: '✅ Build #${env.BUILD_NUMBER} passed. Site live at ${env.RENDER_URL}')
     }
     failure {
         slackSend(
             channel: '#joan_ip1',
-            webhookUrl: "${env.SLACK_WEBHOOK}",
+           tokenCredentialId: 'slackwebhook',
             message: "❌ Build #${env.BUILD_NUMBER} failed. Logs: ${env.BUILD_URL}"
         )
     }
 }
 
+}
