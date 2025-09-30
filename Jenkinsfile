@@ -8,7 +8,6 @@ pipeline {
         RENDER_URL    = 'https://gallery-wq7h.onrender.com'
         SLACK_CHANNEL = '#joan_ip1'
         SLACK_TOKEN   = credentials('slackwebhook')
-        email         = 'adhiambojoan83@gmail.com'
     }
 
     triggers {
@@ -32,13 +31,6 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'npm test'
-            }
-            post {
-                failure {
-                    mail to: 'adhiambojoan83@gmail.com',
-                         subject: "Build Failed: ${env.BUILD_ID}",
-                         body: "The build failed during TESTS.\nCheck Jenkins for details: ${env.BUILD_URL}"
-                }
             }
         }
 
