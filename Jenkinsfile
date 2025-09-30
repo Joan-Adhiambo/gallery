@@ -1,12 +1,12 @@
 pipeline {
     agent any
     tools {
-        nodejs "node.js18"   // Matches the name you gave in Jenkins tools
+        nodejs "NodeJS 18.19.1"   // Must match the NodeJS name configured in Jenkins
     }
 
     environment {
         RENDER_URL   = 'https://gallery-wq7h.onrender.com'
-        SLACK_CHANNEL = '#joan_ip1'
+        //SLACK_CHANNEL = '#joan_ip1'
         email = 'adhiambojoan83@gmail.com'
     }
 
@@ -48,7 +48,8 @@ pipeline {
         }
         failure {
             mail to: 'adhiambojoan83@gmail.com',
-                 subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_ID}"
+                 subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_ID}",
+                 body: "The build has failed. Please check the Jenkins console output for more details."
         }
     }
 }
