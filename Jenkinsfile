@@ -35,8 +35,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'No build step required'
-                sh 'node server.js &'
+                sh 'npm run build || echo "No build step required,"'
             }
         }
 
