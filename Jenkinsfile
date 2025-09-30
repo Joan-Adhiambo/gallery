@@ -28,6 +28,11 @@ pipeline {
             }
         }
 
+        stage('Test') {
+    steps {
+        sh 'npm test'
+    }
+        }
         stage('Build') {
             steps {
                 echo 'Starting the app...'
@@ -41,6 +46,7 @@ pipeline {
             }
         }
     }
+    
 
     post {
         success {
