@@ -20,7 +20,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 🚩 Dummy route if running tests
 if (process.env.NODE_ENV === 'test') {
   app.get('/', (req, res) => {
     return res
@@ -46,7 +45,7 @@ async function startServer() {
     }
 
     app.listen(PORT, () => {
-      console.log(`🚀 Server is listening at http://localhost:${PORT}`);
+      console.log(`Server is listening at http://localhost:${PORT}`);
     });
   } catch (err) {
     console.error('❌ Database connection error:', err);
