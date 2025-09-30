@@ -5,10 +5,10 @@ pipeline {
     }
 
     environment {
-        RENDER_URL   = 'https://gallery-wq7h.onrender.com'
+        RENDER_URL    = 'https://gallery-wq7h.onrender.com'
         SLACK_CHANNEL = '#joan_ip1'
-        SLACK_TOKEN = credentials('slackwebhook')
-        email = 'adhiambojoan83@gmail.com'
+        SLACK_TOKEN   = credentials('slackwebhook')
+        email         = 'adhiambojoan83@gmail.com'
     }
 
     triggers {
@@ -41,7 +41,7 @@ pipeline {
                 }
             }
         }
-        }
+
         stage('Build') {
             steps {
                 sh 'npm run build || echo "No build step required,"'
@@ -53,13 +53,19 @@ pipeline {
                 echo 'Deployment handled by Render auto-deploy from GitHub'
             }
         }
-    
-    
+    }
+
     post {
         success {
             slackSend(
                 channel: "${env.SLACK_CHANNEL}",
-                message: "Build #${env.BUILD_NUMBER} succeeded! Site live at: ${env.RENDER_URL}"
+                message: "✅ Build #${env.BUILD_NUMBER} Deployed successfully!{env.RENDER_URL}"
+            )
+        }
+        failure {
+            slackSend(
+                channel: "${env.SLACK_CHANNEL}",
+                message: "Build #${env.BUILD_NUMBER} failed. Check logs: ${env.BUILD_URL}"
             )
         }
     }
