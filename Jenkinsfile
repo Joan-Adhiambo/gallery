@@ -35,7 +35,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Starting the app...'
+                echo 'No build step required'
                 sh 'node server.js &'
             }
         }
