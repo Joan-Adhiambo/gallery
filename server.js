@@ -12,12 +12,15 @@ let image = require('./routes/image');
 const app = express();
 
 // connecting the database
-const mongoose = require('mongoose');
-const config = require('./_config');
+const MONGODB_URI = process.env.MONGODB_URI || config.mongoURI[app.settings.env];
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log(`Connected to Database: ${MONGODB_URI}`);
+    }
+});
 
-mongoose.connect(config.mongoUri)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error("Error connecting to MongoDB:", err));
 
 
 // test if the database has connected successfully
